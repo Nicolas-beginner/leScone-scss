@@ -1,2 +1,2 @@
 # leScone-scss
-Site desenvolvido com sass utlizando a fomra de escrita scss
+Site desenvolvido com sass utlizando a forma de escrita scss
