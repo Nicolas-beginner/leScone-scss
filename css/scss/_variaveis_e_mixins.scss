@@ -1,0 +1,31 @@
+$begeClaro: #edece4;
+$bege-medio: #cbc6b9;
+$bege-escuro: #988c77;
+$cinza: #2a2426;
+$verde: #1ab912;
+
+$font-1: 'PT Mono', monospace;
+$font-2: 'Aref Ruqaa', serif;
+
+@function Px-To-Em($px, $context: 0){
+    @return $px / $context + em;
+}
+
+@mixin tipo-1($size) {
+    font-family: $font-1;
+    @if($size == 24){
+        font-size: Px-To-Em(24);
+        line-height: Px-To-Em(30, 18);
+    } 
+}
+
+@mixin tipo-2($size) {
+    font-family: $font-2;
+    @if($size == 18){
+        font-size: Px-To-Em(18);
+        line-height: Px-To-Em(30, 18);
+    }  @else if $size == 24 {
+        font-size: Px-To-Em(24);
+        line-height: Px-To-Em(30, 24);
+    }
+}

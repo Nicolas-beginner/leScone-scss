@@ -1,0 +1,19 @@
+footer {
+    width: 100%;
+    height: 100px;
+    background: $cinza;
+    box-shadow: 0 0 0 10px $cinza;
+    p{
+        color: $begeClaro;
+        @include Device(s){
+            text-align: center;
+        }
+    }   
+    a img{
+        float: right;
+        @include Device(s){
+            float: none;
+            margin: 20px auto;
+        }    
+    }
+}

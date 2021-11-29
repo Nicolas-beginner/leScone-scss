@@ -1,0 +1,119 @@
+// grid Var
+$colunas: 12;
+$gutter: 20px;
+$l-device: 1200px;
+$m-device: 760px;
+$s-device: 480px;
+
+//box Sizzing
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+// Mixin mediaQuery
+@mixin Device($Tamanho) {
+    @if $Tamanho == l {
+        @media screen and (min-width: #{$l-device - 1}){
+            @content;
+        } 
+    } @else if $Tamanho == m {
+        @media screen and (min-width: #{$m-device - 1}) and 
+        (max-width: #{$l-device - 1}){
+            @content;
+        }
+    } @else if $Tamanho == s {
+            @media screen and (max-width: #{$m-device - 1}){
+                @content;
+            } 
+        }
+}
+
+@function grid($col, $offset: false){
+    $width: $col / $colunas * 100 + "%";
+    $result: calc(#{$width} - #{$gutter});
+    @if $offset == offset {
+        $gutter: $gutter / 2;
+        $result: calc(#{$width} + #{$gutter});
+    };
+    @return $result;
+};
+
+//Gera classe do grid
+@for $i from 1 to $colunas {
+    .grid-#{$i}{
+        width: grid($i);
+    }
+};
+
+@mixin Grid-Structor {
+    float: left;
+    min-height: 1px;
+    margin-left: $gutter / 2;
+    margin-right: $gutter / 2;
+    @include Device(s){
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        float: none;
+    }
+};
+
+[class^=grid-]{
+    @include Grid-Structor();
+};
+
+//Gera as Classes de offset
+@for $i from 1 to $colunas {
+    .offset-#{$i}{
+        margin-left: grid($i, offset);
+        @extend %offset;
+    }
+};
+
+@mixin Row {
+    position: relative;
+    margin-left: -$gutter/2;
+    margin-right: -$gutter/2;
+    @include Device(s){
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+//Linhas 
+.row {
+    @include Row;
+}
+
+@include Device(s) {
+    %offset{
+        margin-left: 0px;  
+    }
+}
+
+@mixin clearfix {
+    &::after, &::before{
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin Container{
+    max-width: $l-device;
+    margin: 0 auto;
+    position: relative;
+    @include Device(m){
+        max-width: $m-device;
+    }
+    @include Device(s){
+        max-width: $s-device;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    @include clearfix();
+}
+
+.Container{
+    @include Container();
+}
